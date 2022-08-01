@@ -2,12 +2,6 @@ provider "aws" {
   region = "us-east-2"
 }
 
-variable "server_port" {
-  description = "The port the server will use for HTTP requests"
-  type = number
-  default = 8080
-}
-
 data "aws_vpc" "default" {
   default = true
 }
@@ -17,11 +11,6 @@ data "aws_subnets" "default" {
     name = "vpc-id"
     values = [data.aws_vpc.default.id]
   }
-}
-
-output "alb_dns_name" {
-    value = aws_lb.example.dns_name
-    description = "The domain name of the load balancer"
 }
 
 resource "aws_launch_configuration" "example" {
@@ -136,5 +125,15 @@ resource "aws_lb_target_group" "asg" {
     timeout =  3
     healthy_threshold  =  2
     unhealthy_threshold  = 2
+  }
+}
+
+terraform {
+  backend "s3" {
+    bucket = "changs-terraform-state"
+    key = "stage/services/webser-cluster/terraform.tfstate"
+    region = "us-east-2"
+    dynamodb_table = "terraform-up-and-running-locks"
+    encrypt = true
   }
 }
