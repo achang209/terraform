@@ -13,5 +13,5 @@ variable "db_password" {
 variable "db_name" {
   description = "Database name"
   type = string
-  default = "example_database_stage"
+  default = "example_database_prod"
 }
