@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 module "webserver_cluster" {
-  source = "../../../modules/services/webserver-cluster"
+  source = "git@github.com:achang209/terraform-modules.git//services/webserver-cluster?ref=v0.0.1"
   cluster_name = "webservers-stage"
   db_remote_state_bucket = "changs-terraform-state"
   db_remote_state_key = "stage/data-stores/mysql/terraform.tfstate"
