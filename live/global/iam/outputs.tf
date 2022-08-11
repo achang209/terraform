@@ -4,6 +4,10 @@ output "user_arns" {
 }
 
 output "upper_names" {
-    value = [for name in var.user_names: upper(name)]
+    value = [for name in var.user_names: upper(name) if length(name) < 5]
     description = "Practing using `for` and `upper()`"
+}
+
+output "bios" {
+  value = [for name, role in var.hero_thousand_faces : "${name} is the ${role}"]
 }
